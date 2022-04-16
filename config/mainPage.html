@@ -19,18 +19,23 @@
         <br>
         <div class="telemetry" id="blastOffText">Blastoff Countdown</div>
         <img id="blastOffPic" src="content/blastOffPic.gif" style="height:128px;display:none;"/>
-        <button onclick="blastOffTimer();">
+        <button onclick="blastOffTimer();" class="button">
             Start
         </button>
         <br>
         <br>
+        <br>
+        <label class="telemetry" for="apoapsis">Rocket apoapsis:</label>
+        <input type="text" id="apoapsis" name="apoapsis" value="0m" readonly> <!--A readonly feedback input field-->
+        <p><button id="startBurn" onclick="startBurn();" onmouseover="style.background='lightsalmon'" onmouseout="style.background='#ccc'" class="button">Start Burn</button>  <button id="stopBurn" onclick="stopBurn();" onmouseover="style.background='lightblue'" onmouseout="style.background='#ccc'" class="button">Stop Burn</button></p>
+        <br> <!--This comment is for the above line | I use the onclick event, onmouseover event and onmouseout event on the buttons, to call functions and change the colors based on cursor position-->
         <br>
         <h2>Craps simulator!</h2>
         <div id="crapsRes">Craps Results</div>
         <div id="die1Res">First die results</div>
         <div id="die2Res">Second die results</div>
         <div id="sumRes">Sum of die</div>
-        <button id="gambleButton" onclick="playCraps();">Play</button>
+        <button id="gambleButton" onclick="playCraps();" class="button">Play</button>
         
         <br>
         <br>
@@ -39,6 +44,5 @@
         Number of ties: <div id="ties">0</div>
         <br>
         <br>
-        <button id="gambleeButton" onclick="clockLoop();">Play</button>
     </body>
 </html>

@@ -26,4 +26,18 @@ p {
     color: #fff;
     font-size: 34px;
     font-family: calibri;
+}
+.button {
+    border:#000;
+    color: black;
+    background: #ccc;
+    padding: 12px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
   }
+  

@@ -92,10 +92,10 @@ function playCraps(){                                                           
 //--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-|| FUNCTION: CLOCK ||-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 //--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 
-window.onload = function clockLoop() {                                                                  // An onload event in order to load the clock function with the page
+window.onload = function clockLoop(){                                                                   // An onload event in order to load the clock function with the page
     let clockTimer = setInterval(clockDisplay, 1000);                                                   // Establishing the loop to allow for updates every second
                                                                                                         //
-    function clockDisplay() {                                                                           // The function itself
+    function clockDisplay(){                                                                            // The function itself
         var clockTime = new Date();                                                                     // Establishing the base function
         var clockHours = clockTime.getHours();                                                          // Grabbing the hours from the machine
         var clockHoursUTC = clockTime.getUTCHours();                                                    // Grabbing UTC hours
@@ -109,3 +109,35 @@ window.onload = function clockLoop() {                                          
         document.getElementById("clock").innerHTML = clockTimeFull;                                     // Updating the webpage
     }
 }
+
+//--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+//--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-|| FUNCTION: EVENT HANDLING ||-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+//--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+
+var apoapsisMeters = "1.1";                                                                             //
+var displayApo = "1";                                                                                   //
+var burnLoop;                                                                                           //
+                                                                                                        //
+function startBurn(){                                                                                   // Function called in the 'onclick' event for the start button
+    document.getElementById("startBurn").style.background = "darkred";                                  // A brief change of color to give the user feedback that the button was pressed
+    burnLoop = setInterval(burn, 100);                                                                  // Establishing loop
+                                                                                                        //
+    function burn(){                                                                                    //
+        console.log(apoapsisMeters);                                                                    //
+        document.getElementById("apoapsis").value = displayApo + "m";                                   // Updating the Apoapsis, appending meters on end of variable
+        apoapsisMeters = apoapsisMeters * 1.0082312 + 0.2;                                              // A random bit of math I made to make rocket a little more realistic, slowly increasing its height expotentially
+        displayApo = Math.round(apoapsisMeters)                                                         // Rounding the number to display -- It's important I separated the display value and the real value because of the small increments at first, the equation would break if rounding that early.
+                                                                                                        //
+        document.getElementById("startBurn").style.background = "orange";                               // Changing the color of the button to show that it's currently performing a burn.
+                                                                                                        //
+        if(apoapsisMeters > 35785000){                                                                  // Just a small check to stop the burn once the satellite's reached GSO (SSTO?) and stop the loop
+            alert("You've reached geosynchronous orbit! Stopping burn...")                              //
+            clearInterval(burnLoop);                                                                    //
+        }                                                                                               //
+    }                                                                                                   //    
+}                                                                                                       //
+                                                                                                        //
+function stopBurn(){                                                                                    // Function called in the 'onclick' event for the stop button
+    clearInterval(burnLoop);                                                                            // Stopping the burn loop
+    document.getElementById("startBurn").style.background = "#ccc"                                      // Resetting the color of the burn button to signify that it's no longer burning
+}                                                                                                       //
